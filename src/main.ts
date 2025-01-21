@@ -25,7 +25,11 @@ convertBtn.addEventListener('click', () => {
     const trimedText = string.trimStart();
 
     // もし `-` が先頭にこばない場合はスルーする
-    
+
+    if (!trimedText.startsWith('-')) {
+      return;
+    }
+
     const removeHyphenText = trimedText.replace('- ', '');
     console.log(removeHyphenText);
 
@@ -43,6 +47,27 @@ convertBtn.addEventListener('click', () => {
     }
 
     // 前のスペースと比べて、大きくなっていれば、 / で区切りを入れる
+    if (spaceLength !== 0 && array[index - 1]) {
+      const prevSpaceLength = getSpaceLength(array[index - 1]);
+      console.log(prevSpaceLength, spaceLength);
+
+      if (spaceLength <= 2 && prevSpaceLength > spaceLength) {
+        symbolStart = ' / ';
+      }
+      if (prevSpaceLength === spaceLength) {
+        symbolEnd = ', ';
+      }
+    }
+
+    if (array[index + 1]) {
+      const nextSpaceLength = getSpaceLength(array[index + 1]);
+
+      if (spaceLength !== 0 && spaceLength > nextSpaceLength) {
+        symbolEnd = '';
+      }
+    } else {
+      symbolEnd = '';
+    }
 
     return symbolStart + removeHyphenText + symbolEnd;
   });
