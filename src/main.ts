@@ -3,6 +3,7 @@ import './style.css';
 const inputElement = document.getElementById('input') as HTMLTextAreaElement;
 const outputElement = document.getElementById('output') as HTMLTextAreaElement;
 const convertBtn = document.getElementById('btn-convert') as HTMLButtonElement;
+const copyBtn = document.getElementById('btn-copy') as HTMLButtonElement;
 
 convertBtn.addEventListener('click', () => {
   const trimedText = inputElement.value.trim();
@@ -82,4 +83,13 @@ convertBtn.addEventListener('click', () => {
   }
 
   outputElement.value = editedLines.join('');
+});
+
+copyBtn.addEventListener('click', () => {
+  navigator.clipboard.writeText(outputElement.value).then(() => {
+    copyBtn.textContent = 'Copied!';
+    setTimeout(() => {
+      copyBtn.textContent = 'Copy';
+    }, 1000);
+  });
 });
